@@ -1,0 +1,97 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #ffffff;
+  --color-surface: #F4F7FB;
+  --color-stroke: #E8EEF5;
+  --color-highlight: #fafafa;
+  --color-hover: #5981b1;
+  --color-text:#365475;
+  --color-default:#ffffff;
+}
+
+* {
+  overflow: hidden;
+  box-sizing: border-box;
+}
+html, body, #root {
+  height: 100%;
+  width: 100%;
+}
+
+@layer base, components, utilities;
+@layer base {
+  .layout {
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    grid-template-rows: 64px 1fr;
+    grid-template-areas: 
+    'side top'
+    'side main';
+    
+  }
+
+}
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  } to {
+    opacity: 1;
+    transform: translateY(0px)
+  }
+}
+
+@layer utilities {
+
+  .slideUp {
+    animation: slideUp 0.3s ease-out;
+  }
+  .borderBottom {
+    @apply
+    border border-b-stroke border-t-0 border-l-0 border-r-0
+    
+  }
+  
+
+
+.borderRight {
+    @apply
+    border border-b-0 border-t-0 border-l-0 border-r-stroke
+  }
+.borderTop {
+  @apply border border-b-0 border-t-stroke border-l-0 border-r-0
+}
+
+  .highlight {
+    @apply transition-all duration-75
+  }
+  .hightlight:hover {
+    @apply brightness-75
+  }
+  .highlightTwo {
+    @apply transition-all duration-75
+  }
+  .highlightTwo:hover {
+    @apply scale-105
+  }
+  .animationOne {
+    @apply transition-all duration-75
+  }
+  .test {
+    @apply bg-highlight bg-surface bg-hover bg-text
+  }
+}
+.previewText .bn-editor {
+  font-size: 10px !important;
+  width: 400px;
+  height: 256px;
+  
+}
+
+
+.bn-editor {
+  height: 1000px; 
+  max-height: 1000px !important;
+  overflow: hidden !important;
+}
