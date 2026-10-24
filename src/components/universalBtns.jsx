@@ -3,7 +3,7 @@ import * as Switch from '@radix-ui/react-switch'
 import * as Slider from '@radix-ui/react-slider'
 export function UniversalCom({oclass, nclass, iconClass, icon, panel, text, clicked}) {
     return (
-        <div className={twMerge(`h-8 w-full pr-2 pl-2 flex justify-center items-center `, oclass)}>
+        <div className={twMerge(`h-8 w-12 ml-2 pr-2 pl-2 flex justify-center items-center `, oclass)}>
             <div className={twMerge(`h-6 w-full rounded hightlight cursor-pointer flex ${panel ? "justify-end items-center pr-1" : "justify-center items-center"}`, nclass)} onClick={clicked}>
                 <div className={twMerge(`h-6 w-6 z-999`, iconClass)}>{icon}</div>
                 {text !== undefined && 

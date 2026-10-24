@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { UniversalCom, UniversalText } from './components/universalBtns'
-import { Add, Panel, ArchiveBox, SettingsIcon } from './components/icons'
+import { Add, Panel, ArchiveBox, SettingsIcon, EditIcon } from './components/icons'
 import { Pwgendisplay } from './components/Pwgendisplay'
 import { PalPickdisplay } from './components/PalettePicker'
 import { NoteEditor } from './components/NotesTodo'
@@ -12,17 +12,47 @@ function App() {
 
   const [panelone, setpanelone] = useState(false)
   const [display, setdisplay] = useState("main")
-  const [noteDisplay, setNote] = useState(false)
+  const [noteDisplay, setNote] = useState('')
   const [noteData, setNoteData] = useState([])
+  const [activeNote, setActiveNote] = useState(undefined)
 
-  function NotePreview({content, key}) {
+
+  function savingNote(action, data) {
+  if (action === "edited") {
+    setNoteData(noteData.map(notedata => notedata.id === data.id ? data : notedata))
+  } else {
+    setNoteData([...noteData, data])
+  }
+  }
+
+  function NotePreview({content, title, tag, id, hover, data}) {
     const preview = useCreateBlockNote({
       initialContent: content,
     })
-
+    function changeHover(dataid) {
+      setNoteData(noteData.map(data => data.id === dataid ? {...data, hover: !data.hover} : data))
+    }
+    
+    function editFunc() {
+      setActiveNote(data)
+      setNote('edit')
+    }
+    
   return (
-    <div key={key} className='previewText mr-4 cursor-pointer'>
+    <div className='m-4 w-[450px]' onMouseEnter={() => changeHover(id)} onMouseLeave={() => changeHover(id)}>
+      <div className=' grid border borderBottom mb-1' style={{gridTemplateColumns: "1fr 1fr"}}>
+        <div className='flex flex-col'>
+      <span className='text-2xl border borderLeft pl-1'>{title}</span>
+      <span className='text-[#c7c7c7] pl-1'>{tag}</span>
+      </div>
+      <div className='flex justify-end items-center'>
+        {hover && <UniversalCom icon={<EditIcon />} clicked={() => editFunc()}  />}
+      </div>
+      </div>
+      
+    <div  className='previewText cursor-pointer'>
     <BlockNoteView editor={preview} theme="light" editable={false} />
+    </div>
     </div>
   )
   }
@@ -36,10 +66,9 @@ function App() {
   {display === "main" && 
     <div className='layout w-full h-full animationOne' style={{gridTemplateColumns: panelone ? "128px 1fr" : "64px 1fr"}}>
       <div className={`[grid-area:main] bg-surface border border-stroke rounded-tl-2xl ${noteDisplay ? '' : "flex "}`}>
-        {noteDisplay && <NoteEditor saveNote={(newnote) => setNoteData([...noteData, newnote])} setNote={setNote} />}
-        {noteData.map(data => {
-          console.log(data.contents)
-          return <NotePreview content={data.contents} key={data.id} />})}
+        {noteDisplay === "edit" && <NoteEditor savingNote={savingNote} setNote={setNote} activeNote={activeNote} setActiveNote={setActiveNote} />}
+        {noteDisplay === "preview" && noteData.map(data => {
+          return <NotePreview content={data.contents} title={data.title} tag={data.tag} key={data.id} id={data.id} hover={data.hover} data={data}/>})}
       </div>
       <div className='[grid-area:side] grid grid-cols-[256px 1fr] '>
         <div className='flex flex-col items-center '>
@@ -47,7 +76,7 @@ function App() {
             <UniversalCom icon={<Panel />} panel={panelone}  clicked={() => setpanelone(!panelone)}/>
           </div>
           <div className='mt-8 w-full'>
-            <UniversalCom icon={<Add />} panel={panelone} clicked={() => setNote(!noteDisplay)} />
+            <UniversalCom icon={<Add />} panel={panelone} clicked={() => setNote("edit")} />
           </div>
         </div>
           <div className='flex flex-col items-center justify-end'>

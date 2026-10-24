@@ -52,7 +52,11 @@ html, body, #root {
     border border-b-stroke border-t-0 border-l-0 border-r-0
     
   }
-  
+  .borderLeft {
+    @apply
+    border border-b-0 border-t-0 border-l-stroke border-r-0
+    
+  }
 
 
 .borderRight {
@@ -82,9 +86,8 @@ html, body, #root {
     @apply bg-highlight bg-surface bg-hover bg-text
   }
 }
-.previewText .bn-editor {
-  font-size: 10px !important;
-  width: 400px;
+.previewText {
+  width: 450px;
   height: 256px;
   
 }
@@ -94,4 +97,5 @@ html, body, #root {
   height: 1000px; 
   max-height: 1000px !important;
   overflow: hidden !important;
+  font-size: 12px !important;
 }

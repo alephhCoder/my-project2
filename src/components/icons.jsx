@@ -1,4 +1,4 @@
-import {CirclePlus, Columns2, Archive, Settings, House, Copy, ArrowDownUp, Bookmark, BookmarkPlus, X} from 'lucide-react'
+import {CirclePlus, Columns2, Archive, Settings, House, Copy, ArrowDownUp, Bookmark, BookmarkPlus, X, GripHorizontal, Pencil} from 'lucide-react'
 
 export function Add() {
     return <CirclePlus color='#c7c7c7' className='w-6 h-6'/>
@@ -29,4 +29,10 @@ export function BookMarkPlusIcon() {
 }
 export function DeleteIcon() {
     return <X color='#c7c7c7' strokeWidth={2}/>
+}
+export function DragIcon() {
+    return <GripHorizontal color='#c7c7c7' strokeWidth={2}/>
+}
+export function EditIcon() {
+    return <Pencil color='#c7c7c7' strokeWidth={2}/>
 }
